@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Te Amo Matrix</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      font-family: monospace;
+    }
+    .teamo {
+      position: absolute;
+      color: #00ff88;
+      font-size: 16px;
+      user-select: none;
+      cursor: pointer;
+      transition: box-shadow 0.3s, color 0.3s;
+    }
+    .teamo.glow {
+      color: #ffffff;
+      text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081;
+    }
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- YouTube embed (versión instrumental de “Te Quiero - Hombres G”) -->
+  <iframe width="0" height="0" src="https://www.youtube.com/embed/vXXBOeH5kGo?autoplay=1&loop=1&playlist=vXXBOeH5kGo" 
+    frameborder="0" allow="autoplay" allowfullscreen></iframe>
+
+  <script>
+    const cantidad = 200;
+    const palabras = [];
+
+    for (let i = 0; i < cantidad; i++) {
+      const span = document.createElement("span");
+      span.textContent = "TE AMO";
+      span.classList.add("teamo");
+      span.style.left = `${Math.random() * window.innerWidth}px`;
+      span.style.top = `${Math.random() * window.innerHeight}px`;
+      document.body.appendChild(span);
+      palabras.push({
+        el: span,
+        velocidad: 0.5 + Math.random() * 1.5,
+      });
+
+      span.addEventListener("click", () => {
+        span.classList.add("glow");
+        setTimeout(() => {
+          span.classList.remove("glow");
+        }, 1000);
+      });
+    }
+
+    function animar() {
+      palabras.forEach((p) => {
+        let top = parseFloat(p.el.style.top);
+        top += p.velocidad;
+        if (top > window.innerHeight) top = -20;
+        p.el.style.top = `${top}px`;
+      });
+      requestAnimationFrame(animar);
+    }
+
+    animar();
+  </script>
+</body>
+</html>
